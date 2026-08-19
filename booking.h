@@ -8,7 +8,7 @@ class BookingSystem {
     Booking bookings[MAX_BOOKINGS];
     int bookingCount = 0;
 
-   
+    int lowerBound(int day, int hour) const;
 public:
     bool isAvailable(const std::string& room, int day, int startHour, int endHour) const;
     bool add(const Booking& booking);
