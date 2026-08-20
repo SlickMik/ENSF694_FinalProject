@@ -43,7 +43,83 @@ Lines starting with `#` are comments. Current map has 15 buildings and 25 edges 
 
 Menu 6 runs a short ok/fail check. Use menus 1–5 for the report demos.
 
-## Files
+## Demo Scenarios
+
+Run `./campus`, then enter the numbers shown below. Each demo is separate — restart the app if you want a clean session.
+
+### 1. Shortest path (two routes)
+
+Main menu → `1` Navigation
+
+**Route 1**
+- `1` Find route
+- Start: `1` (Library)
+- Destination: `3` (ICT)
+- Screenshot the path and travel time.
+
+**Route 2**
+- `1` Find route
+- Start: `2` (Science A)
+- Destination: `8` (MFH)
+- Screenshot the path and travel time.
+
+Do not undo yet. Stay in the Navigation menu.
+
+### 2. Undo navigation
+
+Still in Navigation (or start fresh: Main → `1`).
+
+1. `1` Find route → `3` (ICT) → `9` (Residence)
+2. `3` Previous routes — screenshot the list
+3. `2` Undo — should print `Back to ICT`
+4. `3` Previous routes again — last route should be gone
+5. `4` Back to main menu
+
+Undo removes the most recent route and returns its starting building.
+
+### 3. Booking range query
+
+Main menu → `2` Bookings → `4` Events in time range
+
+```
+Day number: 0
+Start of range: 10
+End of range: 14
+```
+
+Screenshot the events listed. Press `7` to return to the main menu.
+
+(The app loads 100 sample bookings on startup.)
+
+### 4. Priority service queue
+
+Main menu → `3` Service desk
+
+Add three requests in this order:
+
+| Step | Choice | Input | Priority |
+|------|--------|-------|----------|
+| Add | `1` | Broken projector | `3` (Low) |
+| Add | `1` | Network down | `1` (Emergency) |
+| Add | `1` | Need markers | `2` (Standard) |
+
+Then `2` Serve next three times. Order should be Emergency → Standard → Low. Screenshot each serve. Press `3` to go back.
+
+### 5. Fast resource lookup
+
+Main menu → `4` Resources → `1` Find
+
+- Enter `ICT` — should show the record and table check count
+- Enter `DOES_NOT_EXIST` — should show `Not found.`
+
+Screenshot both. Press `4` to go back.
+
+### 6. Request pipeline (20 requests)
+
+Main menu → `5` Incoming requests → `4` Test 20 requests
+
+Screenshot the processing order `1 -> 2 -> ... -> 20`. Press `5` to go back.
+
 
 ```
 main.cpp            menus
