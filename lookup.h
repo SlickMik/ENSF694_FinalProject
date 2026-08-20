@@ -8,6 +8,7 @@ struct Resource {
     std::string type;
 };
 
+// Hash table used for quick resource searches
 class ResourceLookup {
     struct Entry {
         Resource resource;

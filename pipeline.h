@@ -6,11 +6,14 @@ struct IncomingRequest {
     int number = 0;
     std::string type;
     std::string details;
+
+    // Extra information used when the request gets processed
     std::string source;
     std::string destination;
     int priority = 3;
 };
 
+// Circular queue for requests that have not been processed yet
 class RequestPipeline {
     IncomingRequest requests[100];
     int front = 0;

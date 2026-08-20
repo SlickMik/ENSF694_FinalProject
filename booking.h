@@ -4,6 +4,7 @@
 
 const int MAX_BOOKINGS = 200;
 
+// Stores bookings in time order so searches are easier
 class BookingSystem {
     Booking bookings[MAX_BOOKINGS];
     int bookingCount = 0;

@@ -12,6 +12,7 @@ struct Booking {
 
 const int MAX_ROOM_BOOKINGS = 100;
 
+// Each room also keeps its own list of bookings
 struct Room {
     std::string roomId;
     int capacity = 0;

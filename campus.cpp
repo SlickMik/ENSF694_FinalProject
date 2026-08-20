@@ -10,7 +10,7 @@ int Campus::find(const std::string& name) const {
 }
 
 
-//Adds building to campus from file
+// Adds a building only if it is new
 int Campus::add(const std::string& name) {
     int index = find(name);
 
@@ -25,7 +25,7 @@ int Campus::add(const std::string& name) {
 }
 
 
-// Loads buildings from local file
+// Loads one connection from each line in the file
 void Campus::load(const std::string& file_name) {
     std::ifstream input(file_name);
     if (!input) throw std::runtime_error("File isn't found");
@@ -43,6 +43,7 @@ void Campus::load(const std::string& file_name) {
 
         int a = add(first), b = add(second);
 
+        // An undirected edge is only counted once
         if (!weights[a][b]) ++edgeCount;
 
         weights[a][b] = weights[b][a] = std::stoi(weight);

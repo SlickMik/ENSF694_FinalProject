@@ -4,6 +4,7 @@ Building::Building(const std::string& id, const std::string& name, Location loca
     : buildingId(id), name(name), location(location) {}
 
 bool Building::addRoom(const Room& room) {
+    // Do not add the same room twice
     if (roomCount == MAX_ROOMS_PER_BUILDING || findRoom(room.roomId)) return false;
     rooms[roomCount++] = room;
     return true;

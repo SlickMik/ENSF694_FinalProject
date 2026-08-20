@@ -17,6 +17,7 @@ bool ServiceQueue::serve(ServiceRequest& request) {
 
     int highest = 0;
 
+    // Find the most urgent request currently waiting
     for (int i = 1; i < requestCount; i++) {
         if (requests[i].priority < requests[highest].priority) {
             highest = i;

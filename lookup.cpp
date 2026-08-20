@@ -1,6 +1,7 @@
 #include "lookup.h"
 
 int ResourceLookup::hash(const std::string& id) const {
+    // Turn the string ID into a table position
     unsigned int value = 0;
 
     for (char letter : id) {
@@ -14,6 +15,7 @@ bool ResourceLookup::insert(const Resource& resource) {
     int start = hash(resource.id);
     int deletedSpot = -1;
 
+    // Move forward until an empty or deleted spot is found
     for (int i = 0; i < 257; i++) {
         int position = (start + i) % 257;
 
@@ -82,6 +84,7 @@ bool ResourceLookup::remove(const std::string& id) {
         }
 
         if (table[position].active && table[position].resource.id == id) {
+            // Leave the used flag on so searches can continue past this spot
             table[position].active = false;
             resourceCount--;
             return true;

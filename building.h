@@ -10,6 +10,7 @@ struct Location {
 
 const int MAX_ROOMS_PER_BUILDING = 3;
 
+// A building owns the rooms that are inside it
 struct Building {
     std::string buildingId;
     std::string name;

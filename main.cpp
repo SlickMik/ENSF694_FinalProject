@@ -375,6 +375,7 @@ void pipelineMenu(RequestPipeline& pipeline, const Campus& campus,
             request.number = nextNumber;
 
             if (choice == 1) {
+                // Save both buildings so the route can be found later
                 request.type = "Navigation";
                 request.source = chooseLocation(campus, "Starting location:");
                 request.destination = chooseLocation(campus, "Destination:");
@@ -411,6 +412,7 @@ void pipelineMenu(RequestPipeline& pipeline, const Campus& campus,
                 std::cout << "Processing request " << request.number << ": "
                           << request.type << " - " << request.details << "\n";
 
+                // Do the actual job after it comes out of the pipeline
                 if (request.type == "Navigation") {
                     try {
                         Route route = navigator.shortest_path(campus, request.source,
@@ -421,6 +423,7 @@ void pipelineMenu(RequestPipeline& pipeline, const Campus& campus,
                         std::cout << "Navigation failed: " << error.what() << "\n";
                     }
                 } else if (request.type == "Service") {
+                    // Service requests go to the priority queue next
                     if (serviceQueue.add({request.details, request.priority}))
                         std::cout << "Sent to the service desk queue.\n";
                     else
@@ -474,12 +477,15 @@ int main() {
         ServiceQueue serviceQueue;
         ResourceLookup directory;
         RequestPipeline pipeline;
+
+        // Add some starting bookings for the demo
         for (int i = 0; i < 100; i++) {
             bookingSystem.add({campus.room(i % campus.room_count()).roomId,
                                "Event " + std::to_string(i),
                                i / 20, i % 20, i % 20 + 1});
         }
 
+        // Put buildings and rooms into the lookup table
         for (int i = 0; i < campus.building_count(); i++) {
             std::string id = campus.building(i).name;
             directory.insert({id, id, "Building"});

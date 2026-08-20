@@ -9,11 +9,13 @@ struct Route {
     int cost = 0;
 };
 
+// Finds the cheapest route through the campus graph
 class Navigator {
 public:
     Route shortest_path(const Campus& campus, const std::string& source, const std::string& destination) const;
 };
 
+// Saves the last ten routes so they can be undone
 class NavigationSession {
     const Campus& campus;
     const Navigator& navigator;

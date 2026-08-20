@@ -44,6 +44,7 @@ const Booking* BookingSystem::get(const std::string& room, int day, int hour) co
 
 bool BookingSystem::isAvailable(const std::string& room, int day,
                                 int startHour, int endHour) const {
+    // Two bookings conflict if their times overlap in the same room
     for (int i = 0; i < bookingCount; i++) {
         bool sameRoom = bookings[i].room == room;
         bool sameDay = bookings[i].day == day;
@@ -74,6 +75,7 @@ bool BookingSystem::add(const Booking& booking) {
     Room* room = campus ? campus->findRoom(booking.room) : nullptr;
     if (campus && (!room || !room->addBooking(booking))) return false;
 
+    // Move later bookings over to keep the array sorted
     int position = lowerBound(booking.day, booking.startHour);
 
     for (int i = bookingCount; i > position; i--) {
@@ -119,6 +121,7 @@ bool BookingSystem::remove(const std::string& room, int day, int hour) {
 
 int BookingSystem::between(int day, int firstHour, int lastHour,
                            Booking result[], int capacity) const {
+    // Start near the requested day instead of searching from the start
     int position = lowerBound(day, 0);
     int resultCount = 0;
 

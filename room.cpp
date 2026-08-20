@@ -9,6 +9,7 @@ bool Room::addBooking(const Booking& booking) {
 bool Room::removeBooking(int day, int hour) {
     for (int i = 0; i < bookingCount; i++) {
         if (bookings[i].day == day && bookings[i].startHour == hour) {
+            // Close the gap left by the removed booking
             for (int j = i; j < bookingCount - 1; j++) bookings[j] = bookings[j + 1];
             bookingCount--;
             return true;

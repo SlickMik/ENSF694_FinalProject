@@ -12,6 +12,7 @@ Route Navigator::shortest_path(const Campus& campus, const std::string& source,
     for (int i = 0; i < MAX_BUILDINGS; ++i) { distance[i] = INT_MAX; previous[i] = -1; }
     distance[start] = 0;
 
+    // Basic Dijkstra search using the adjacency matrix
     for (int step = 0; step < campus.building_count(); ++step) {
         int current = -1;
         for (int i = 0; i < campus.building_count(); ++i)
@@ -28,6 +29,8 @@ Route Navigator::shortest_path(const Campus& campus, const std::string& source,
     }
 
     if (distance[finish] == INT_MAX) throw std::runtime_error("no route");
+
+    // Follow the previous nodes backwards to build the route
     int reverse[MAX_BUILDINGS], reverse_count = 0;
     for (int at = finish; at >= 0; at = previous[at]) reverse[reverse_count++] = at;
     Route route;

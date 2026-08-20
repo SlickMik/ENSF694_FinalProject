@@ -5,6 +5,7 @@ bool RequestPipeline::enqueue(const IncomingRequest& request) {
         return false;
     }
 
+    // Wrap around when the end of the array is reached
     requests[back] = request;
     back = (back + 1) % 100;
     requestCount++;
@@ -16,6 +17,7 @@ bool RequestPipeline::dequeue(IncomingRequest& request) {
         return false;
     }
 
+    // The oldest request is always at the front
     request = requests[front];
     front = (front + 1) % 100;
     requestCount--;

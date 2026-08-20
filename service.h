@@ -7,6 +7,7 @@ struct ServiceRequest {
     int priority = 3;
 };
 
+// Lower priority numbers mean the request is more urgent
 class ServiceQueue {
     ServiceRequest requests[100];
     int requestCount = 0;

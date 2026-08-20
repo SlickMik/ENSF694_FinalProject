@@ -4,6 +4,7 @@
 
 const int MAX_BUILDINGS = 20;
 
+// The campus map is stored as an adjacency matrix
 class Campus {
     Building buildings[MAX_BUILDINGS];
     int weights[MAX_BUILDINGS][MAX_BUILDINGS]{};
