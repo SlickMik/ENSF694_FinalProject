@@ -1,0 +1,32 @@
+# ENSF 694 sample campus map
+# Format: BuildingA,BuildingB,minutes
+# Weights = walking time in minutes
+
+# --- Core map (from project spec / screenshots) ---
+Library,Science A,3
+Library,ICT,4
+Science A,ENG Block,2
+Science A,Gym,5
+ICT,ENG Block,6
+ICT,Student U,3
+ICT,Parkade,7
+ENG Block,MFH,2
+Student U,Residence,5
+
+# --- Extra buildings (project needs 15+ nodes, 25+ edges) ---
+Arts,Library,3
+Arts,Science A,2
+Business,ENG Block,3
+Business,ICT,4
+Dining,Student U,2
+Dining,Residence,3
+Health,MFH,2
+Health,Gym,4
+Admin,Library,2
+Admin,ICT,3
+Research,Science A,3
+Research,ENG Block,2
+Dining,Arts,4
+Health,Admin,5
+Business,Parkade,3
+Research,Gym,6
