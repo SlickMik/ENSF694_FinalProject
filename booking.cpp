@@ -104,7 +104,10 @@ bool BookingSystem::remove(const std::string& room, int day, int hour) {
         return false;
     }
 
-    if (campus) campus->findRoom(room)->removeBooking(day, hour);
+    if (campus) {
+        Room* roomPtr = campus->findRoom(room);
+        if (roomPtr) roomPtr->removeBooking(day, hour);
+    }
 
     for (int i = position; i < bookingCount - 1; i++) {
         bookings[i] = bookings[i + 1];
@@ -116,14 +119,28 @@ bool BookingSystem::remove(const std::string& room, int day, int hour) {
 
 int BookingSystem::between(int day, int firstHour, int lastHour,
                            Booking result[], int capacity) const {
-    int position = lowerBound(day, firstHour);
+    int position = lowerBound(day, 0);
     int resultCount = 0;
 
     while (position < bookingCount && resultCount < capacity) {
         const Booking& current = bookings[position];
 
-        if (current.day != day || current.startHour >= lastHour) {
+        if (current.day > day) {
             break;
+        }
+
+        if (current.day < day) {
+            position++;
+            continue;
+        }
+
+        if (current.startHour >= lastHour) {
+            break;
+        }
+
+        if (current.endHour <= firstHour) {
+            position++;
+            continue;
         }
 
         result[resultCount] = current;
