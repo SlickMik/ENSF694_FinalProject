@@ -49,3 +49,8 @@ std::string NavigationSession::undo() {
     return history[--historyCount].source;
 }
 int NavigationSession::history_size() const { return historyCount; }
+
+const Route& NavigationSession::getRoute(int index) const {
+    if (index < 0 || index >= historyCount) throw std::out_of_range("route not found");
+    return history[index];
+}

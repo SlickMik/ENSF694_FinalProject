@@ -1,15 +1,17 @@
 #pragma once
 
-#include "room.h"
+#include "campus.h"
 
 const int MAX_BOOKINGS = 200;
 
 class BookingSystem {
     Booking bookings[MAX_BOOKINGS];
     int bookingCount = 0;
+    Campus* campus;
 
     int lowerBound(int day, int hour) const;
 public:
+    BookingSystem(Campus* campus = nullptr);
     bool isAvailable(const std::string& room, int day, int startHour, int endHour) const;
     bool add(const Booking& booking);
     bool remove(const std::string& room, int day, int hour);

@@ -1,5 +1,7 @@
 #include "booking.h"
 
+BookingSystem::BookingSystem(Campus* campus) : campus(campus) {}
+
 // Finds where a date and time belongs in the sorted array.
 int BookingSystem::lowerBound(int day, int hour) const {
     int wantedTime = day * 24 + hour;
@@ -69,6 +71,9 @@ bool BookingSystem::add(const Booking& booking) {
         return false;
     }
 
+    Room* room = campus ? campus->findRoom(booking.room) : nullptr;
+    if (campus && (!room || !room->addBooking(booking))) return false;
+
     int position = lowerBound(booking.day, booking.startHour);
 
     for (int i = bookingCount; i > position; i--) {
@@ -98,6 +103,8 @@ bool BookingSystem::remove(const std::string& room, int day, int hour) {
     if (position == bookingCount) {
         return false;
     }
+
+    if (campus) campus->findRoom(room)->removeBooking(day, hour);
 
     for (int i = position; i < bookingCount - 1; i++) {
         bookings[i] = bookings[i + 1];

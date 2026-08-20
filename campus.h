@@ -16,6 +16,12 @@ public:
     int find(const std::string& name) const;
     int weight(int first, int second) const;
     const Building& building(int index) const;
+    bool addRoom(const std::string& buildingId, const Room& room);
+    Room* findRoom(const std::string& roomId);
+    const Room* findRoom(const std::string& roomId) const;
+    Room& room(int index);
+    const Room& room(int index) const;
+    int room_count() const;
     int building_count() const;
     int edge_count() const;
 };

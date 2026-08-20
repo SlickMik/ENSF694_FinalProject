@@ -18,7 +18,7 @@ int Campus::add(const std::string& name) {
 
     if (buildingCount == MAX_BUILDINGS) throw std::overflow_error("Campus is full");
 
-    buildings[buildingCount].name = name;
+    buildings[buildingCount] = Building(name, name, {});
 
     return buildingCount++;
 
@@ -52,6 +52,49 @@ void Campus::load(const std::string& file_name) {
 int Campus::weight(int first, int second) const { return weights[first][second];}
 
 const Building& Campus::building(int index) const { return buildings[index]; }
+
+bool Campus::addRoom(const std::string& buildingId, const Room& room) {
+    int index = find(buildingId);
+    return index >= 0 && buildings[index].addRoom(room);
+}
+
+Room* Campus::findRoom(const std::string& roomId) {
+    for (int i = 0; i < buildingCount; i++) {
+        Room* room = buildings[i].findRoom(roomId);
+        if (room) return room;
+    }
+    return nullptr;
+}
+
+const Room* Campus::findRoom(const std::string& roomId) const {
+    for (int i = 0; i < buildingCount; i++) {
+        const Room* room = buildings[i].findRoom(roomId);
+        if (room) return room;
+    }
+    return nullptr;
+}
+
+Room& Campus::room(int index) {
+    for (int i = 0; i < buildingCount; i++) {
+        if (index < buildings[i].roomCount) return buildings[i].rooms[index];
+        index -= buildings[i].roomCount;
+    }
+    throw std::out_of_range("room not found");
+}
+
+const Room& Campus::room(int index) const {
+    for (int i = 0; i < buildingCount; i++) {
+        if (index < buildings[i].roomCount) return buildings[i].rooms[index];
+        index -= buildings[i].roomCount;
+    }
+    throw std::out_of_range("room not found");
+}
+
+int Campus::room_count() const {
+    int count = 0;
+    for (int i = 0; i < buildingCount; i++) count += buildings[i].roomCount;
+    return count;
+}
 
 int Campus::building_count() const { return buildingCount;}
 

@@ -24,4 +24,5 @@ public:
     Route navigate(const std::string& source, const std::string& destination);
     std::string undo();
     int history_size() const;
+    const Route& getRoute(int index) const;
 };
