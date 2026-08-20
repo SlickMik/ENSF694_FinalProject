@@ -479,7 +479,7 @@ int main() {
             else if (choice == 5)
                 pipelineMenu(pipeline);
             else if (choice == 6)
-                runRequirementTests(campus, navigator);
+                runRequirementTests(campus, navigator, bookingSystem, directory);
             else if (choice == 7) {
                 std::cout << "Goodbye.\n";
                 break;
