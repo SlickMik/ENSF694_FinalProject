@@ -429,9 +429,9 @@ int main() {
         NavigationSession session(campus, navigator);
         campus.addRoom("ICT", {"ICT101", 40, "lecture"});
         campus.addRoom("ICT", {"ICT102", 30, "lab"});
-        campus.addRoom("ENG", {"ENG201", 50, "lecture"});
-        campus.addRoom("LIB", {"LIB101", 12, "study"});
-        campus.addRoom("SCI", {"SCI301", 25, "lab"});
+        campus.addRoom("ENG Block", {"ENG201", 50, "lecture"});
+        campus.addRoom("Library", {"LIB101", 12, "study"});
+        campus.addRoom("Science A", {"SCI301", 25, "lab"});
 
         BookingSystem bookingSystem(&campus);
         ServiceQueue serviceQueue;
