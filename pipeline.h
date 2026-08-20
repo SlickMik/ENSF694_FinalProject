@@ -6,6 +6,9 @@ struct IncomingRequest {
     int number = 0;
     std::string type;
     std::string details;
+    std::string source;
+    std::string destination;
+    int priority = 3;
 };
 
 class RequestPipeline {

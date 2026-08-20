@@ -353,7 +353,8 @@ void resourceMenu(ResourceLookup& directory) {
     }
 }
 
-void pipelineMenu(RequestPipeline& pipeline) {
+void pipelineMenu(RequestPipeline& pipeline, const Campus& campus,
+                  const Navigator& navigator, ServiceQueue& serviceQueue) {
     int nextNumber = 1;
 
     while (true) {
@@ -372,10 +373,30 @@ void pipelineMenu(RequestPipeline& pipeline) {
         if (choice == 1 || choice == 2) {
             IncomingRequest request;
             request.number = nextNumber;
-            request.type = choice == 1 ? "Navigation" : "Service";
 
-            std::cout << "Request details: ";
-            std::getline(std::cin >> std::ws, request.details);
+            if (choice == 1) {
+                request.type = "Navigation";
+                request.source = chooseLocation(campus, "Starting location:");
+                request.destination = chooseLocation(campus, "Destination:");
+
+                if (request.source.empty() || request.destination.empty()) {
+                    std::cout << "Invalid location.\n";
+                    continue;
+                }
+
+                request.details = request.source + " to " + request.destination;
+            } else {
+                request.type = "Service";
+                std::cout << "Describe the problem: ";
+                std::getline(std::cin >> std::ws, request.details);
+                std::cout << "Priority (1 Emergency, 2 Standard, 3 Low): ";
+                std::cin >> request.priority;
+
+                if (request.priority < 1 || request.priority > 3) {
+                    std::cout << "Invalid priority.\n";
+                    continue;
+                }
+            }
 
             if (pipeline.enqueue(request)) {
                 std::cout << "Request " << request.number << " added.\n";
@@ -389,6 +410,22 @@ void pipelineMenu(RequestPipeline& pipeline) {
             if (pipeline.dequeue(request)) {
                 std::cout << "Processing request " << request.number << ": "
                           << request.type << " - " << request.details << "\n";
+
+                if (request.type == "Navigation") {
+                    try {
+                        Route route = navigator.shortest_path(campus, request.source,
+                                                              request.destination);
+                        std::cout << "Route: ";
+                        printRoute(route);
+                    } catch (const std::exception& error) {
+                        std::cout << "Navigation failed: " << error.what() << "\n";
+                    }
+                } else if (request.type == "Service") {
+                    if (serviceQueue.add({request.details, request.priority}))
+                        std::cout << "Sent to the service desk queue.\n";
+                    else
+                        std::cout << "Service desk queue is full.\n";
+                }
             } else {
                 std::cout << "Queue is empty.\n";
             }
@@ -477,7 +514,7 @@ int main() {
             else if (choice == 4)
                 resourceMenu(directory);
             else if (choice == 5)
-                pipelineMenu(pipeline);
+                pipelineMenu(pipeline, campus, navigator, serviceQueue);
             else if (choice == 6)
                 runRequirementTests(campus, navigator, bookingSystem, directory);
             else if (choice == 7) {
